@@ -11,12 +11,8 @@ The technical criteria and how I have approached them:
 - Frontend: Simple HTML/CSS, with the caveat that HTML forms can only do GET and POST requests natively.
 - Implement unit tests --> pytest and pytest-flask
 - Store data in a database --> sqlite
-- Include validation and error handling --> Validation for required fields, error handling for invalid data formats.
+- Include validation and error handling --> Prevention of injection attacks via input sanitisation
 - Document API endpoints --> See above.
-
-Some added features:
-- Task creation, completion, and deletion
-- Colour-coding for deadline tracking (orange = approaching, red = overdue)
 
 ## How to run the application
 1. Clone the repository
@@ -29,16 +25,17 @@ Some added features:
    ```
 4. Initialise the database:
    ```bash
-   flask init-db
+   flask --app task-tracker init-db
    ```
 5. Run the Flask application:
    ```bash
-   flask run
+   flask --app task-tracker run --debug
    ```  
+6. Head to localhost (http://127.0.0.1:5000)
 
-The Scenario/Task is verbatim:
+The Scenario/Task:
 
-`HMCTS requires a new system to be developed so caseworkers can keep track of their tasks.
+```HMCTS requires a new system to be developed so caseworkers can keep track of their tasks.
 
 Your technical test is to develop a new system to facilitate the creation of these tasks.
 
@@ -54,4 +51,4 @@ Due date/time
 On successful task creation, the API should return the task and the frontend display a confirmation message alongside the successfully created task details.
 
 No other CRUD operations related to the management of tasks are required.
-`
+```

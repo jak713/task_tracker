@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Due</th>
+        <th>Actions</th>
+    </tr>
+{% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description or '-' }}</td>
+            <td>{% if task.status == 1 %} <div class="complete"></div> {% else %}<div class="incomplete"></div>{% endif %}</td>
+            <td>{{ task.due_date_time }} </td>
+            <td>
+                <form action="/tasks/{{ task.id }}/complete" method="POST" style="display:inline;">
+                    <button type="submit">Complete</button>
+                </form>
+                <form action="/tasks/{{ task.id }}/delete" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+</table>
+<form action="/tasks" method="POST">
+    <label>Task: <input type="text" name="title" required></label><br>
+    <label>Description: <textarea name="description"></textarea></label><br>
+    <label>Status: 
+        <select name="status">
+            <option value="0">Incomplete</option>
+            <option value="1">Complete</option>
+
+        </select>
+    </label><br>
+    <label>Due: <input type="datetime-local" name="due_date_time" required></label><br>
+    <button type="submit">Add Task</button>
+</form>
+
+{% if task%}
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+ <h2>Task Successfully Added</h2>
+    <p><strong>ID:</strong> {{ task.id }}</p>
+    <p><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Description:</strong> {{ task.description or 'Not provided' }}</p>
+    <p><strong>Status:</strong> {{ 'Complete' if task.status == 1 else 'Incomplete' }}</p>
+    <p><strong>Due Date:</strong> {{ task.due_date_time }}</p>
+</div>
+{% endif %}
+
+{% if message %}
+    <footer class="message">{{ message }}</footer>
+{% endif %}
+
+</body>
+</html>
