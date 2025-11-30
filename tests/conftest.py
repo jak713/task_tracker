@@ -1,5 +1,5 @@
 import pytest
-from task_tracker import create_app
+from task_tracker import create_app, db
 
 @pytest.fixture
 def app():
@@ -16,3 +16,9 @@ def client(app):
 @pytest.fixture
 def runner(app):
     return app.test_cli_runner()
+
+@pytest.fixture(autouse=True)
+def initialise_database(app):
+    with app.app_context():
+        db.init_db()
+        yield
