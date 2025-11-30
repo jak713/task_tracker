@@ -1,17 +1,18 @@
-A task management CRUD application built for HMCTS's Junior SWE technical assessment. 
+A task management API built for HMCTS's Junior SWE coding task.
 
 API endpoints:
-- `POST /tasks`: Create a new task
-- `GET /tasks/<id>`: Retrieve task details (e.g. when confirming creation)
-- `POST /tasks/<id>/complete`: Mark a task as completed
-- `POST /tasks/<id>/delete`: Remove a task
+- `POST /`: Create a new task
+- `GET /`: List all tasks
+- `GET /<id>`: Retrieve task details (e.g. when confirming creation)
+- `POST /<id>/complete`: Mark a task as completed
+- `POST /<id>/delete`: Remove a task
 
 The technical criteria and how I have approached them: 
 - Backend: Python with Flask
-- Frontend: Simple HTML/CSS, with the caveat that HTML forms can only do GET and POST requests natively.
-- Implement unit tests --> pytest and pytest-flask
-- Store data in a database --> sqlite
-- Include validation and error handling --> Prevention of injection attacks via input sanitisation
+- Frontend: Simple HTML/CSS, with the caveat that HTML forms can only do GET and POST requests natively. I wanted to keep it simple and avoid adding JavaScript for this assessment.
+- Implement unit tests --> pytest is used for this with tests located in the `tests` directory.
+- Store data in a database --> sqlite (raw SQL) over an ORM only to again keep things simpler.
+- Include validation and error handling --> 
 - Document API endpoints --> See above.
 
 ## How to run the application
@@ -25,11 +26,11 @@ The technical criteria and how I have approached them:
    ```
 4. Initialise the database:
    ```bash
-   flask --app task-tracker init-db
+   flask --app task_tracker init-db
    ```
 5. Run the Flask application:
    ```bash
-   flask --app task-tracker run --debug
+   flask --app task_tracker run --debug
    ```  
 6. Head to localhost (http://127.0.0.1:5000)
 

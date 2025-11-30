@@ -7,7 +7,6 @@ def app():
     app.config.update({
         "TESTING": True,
     })
-
     yield app
 
 @pytest.fixture

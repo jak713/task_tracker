@@ -18,22 +18,20 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/')
-    def main():
-        return redirect('/tasks')
-
     from . import db
     db.init_app(app)
     
     from . import tasks
     app.register_blueprint(tasks.bp)
 
-    app.add_url_rule('/tasks', endpoint='tasks', view_func=tasks.tasks, methods=['GET', 'POST'])
-
-    app.add_url_rule('/tasks/<int:id>', endpoint='confirmation', view_func=tasks.confirmation, methods=['GET'])
-
-    app.add_url_rule('/tasks/<int:id>/delete', endpoint='delete_task', view_func=tasks.delete_task, methods=['POST','GET'])
-    
-    app.add_url_rule('/tasks/<int:id>/complete', endpoint='complete_task', view_func=tasks.complete_task, methods=['POST','GET'])
+    # Create
+    app.add_url_rule('/', endpoint='', view_func=tasks.create_task, methods=['POST'])
+    # Read
+    app.add_url_rule('/', endpoint='tasks', view_func=tasks.tasks, methods=['GET'])
+    app.add_url_rule('/<int:id>', endpoint='get_task', view_func=tasks.get_task, methods=['GET'])
+    # Update
+    app.add_url_rule('/<int:id>/complete', endpoint='complete_task', view_func=tasks.complete_task, methods=['POST','GET'])
+    # Delete
+    app.add_url_rule('/<int:id>/delete', endpoint='delete_task', view_func=tasks.delete_task, methods=['POST','GET'])
     
     return app
